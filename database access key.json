@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "thaniyanki-xpath-manager",
+  "private_key_id": "d4c4cdac8722f5fec2addcab9c2a3896f097e1c2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDWP5VrlV2SxfEl\n579hCJH3yFe6zuoE+U8KHkT1HLm8owModoPOyzr/li5q+z6FKquLeWHpD/gUhlU/\n1dct/NTNer25XIecYA1h6d6IolLnba/tNEdR/H5Zp/6o2fM3Gq+1PRf6ds6GWWC5\n+uM/bfMiEfF2W4gvePkUFMwiyVqAWGK7oKkMrFfU0wbBMuarLHUfPpXnS+GKxqAh\nFSn+U6H72x3kTbBRfxxLYcKu3386zvAAseAssQl2HoUWSUvLRZRPCON5sde+rP+k\nUz8X7TUTa8emuAUb6uK/3VZEZmHKHVjW5x8qxvuMPeBmLdAcFkM+a9rJyhhkvifX\nzbbmty6lAgMBAAECggEACn9ovQc/Y6rYPdu6QwZjpJOdR4Ajnk/FltYp2dATrRGt\nshoF1lLwlp0PXtrlqCpm57lwWeDtmQ/bSyVEBbL+4vyRzEHOO+lxmRZs+sk9V61G\nXVCI8r707+6tKdfYCh9VdFjEfSy8wioh9QA9NJqYuwF3ES4QoQbZPtR6th+jPr4+\n+FO6kYk2ydDi6pT0tprnm0fbXLF3wHoRd0G68TITWiYUZ1o3VjAHRjLhbYZF3N8i\nCpgff18NUb0Rzgt8RYkP5tHZyYb0VKNSuKt9Gm6sB3yjzwsu+pEKVeQ6s4eewqs5\nWKYRUJu8dBPKm3eNuBYS3LG9P4xoLegg17U4YocNgQKBgQDyGqXNssCjuFYHXPSu\n7nWVQ8ukbuXs92zgrUqqEgH4fA8cumQYPQwpI/J2uZ3H1J7GTyVwkCXkJNwGnJRg\nfu8Rt+igOvUoF6ia+L9qxcYRFkGMSjFhdv3UzEGCtEtUb9mu5AIFs+GGTVrocYON\nlfVg2TIJY6YFtC5/Oe19pc2G5QKBgQDii6NzQNotw61zMKWKTCoRoPMLeAovyWcs\nGbrHVUxDh8ms1jVT9xvevY1GemOv1zUZaYUlvIV1ALWwR3V2QGtjkx6sScyTTc86\n4h3zw6DTYKTwpcBDVWpOJXgyWELxbUrgooQAT7xNpu48B+RLuH1CbPAACjWUkkTY\nsFAsF87MwQKBgDe59IIla/wDWSH2vodpcf06jqw5rojd5tzMZoxA+t0kSSI2sQV3\nP85UbOHxFaVCho1k+FwxgddCuLZ44hpX/VVZvJztFTL2RyPsr7q27UFPmyTciwNB\nLWoG3elk8JXt7PA5oVGItxd/xLYOMtarNsDlHYRVwIg9khpMziKGwIkVAoGAWQIO\nHRlM35AzFL/3OmgEW1rGQypNrkrOO3h8dxbfWOT/6uVanHvJOnF1EUzC3/KJDUv1\nIUd5k+fMes8IqoZS6xOBiKWSOAnpMrRmmkCxbntZMqec65eipcN4/ybIXnzXX3za\nqhip3kSI85MSMmHw7OlKPmnEdXQmkpBrX3eXK8ECgYEAn8bdPAJ3UR1E/Z7PttLv\nkLunYt3UaxDFB2K56QYfM6rtvUDKAbsQGOC4GvR2uUyp5RlWSx7/oZiL+VF7rjjx\nji4vaTCXKh8lj0Mwdmwm0d4pSomFm1l0w3C1yVkTOL58fv/EJhFJFmQtfvffAch/\nwkNe4IjI6d+mPKG9rul3AJY=\n-----END PRIVATE KEY-----\n",
+  "client_email": "client-reader@thaniyanki-xpath-manager.iam.gserviceaccount.com",
+  "client_id": "101607239946901896824",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/client-reader%40thaniyanki-xpath-manager.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
