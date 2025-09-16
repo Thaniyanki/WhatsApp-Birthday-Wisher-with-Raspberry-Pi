@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Scheduler Bot
+Exec=lxterminal -t "Scheduler Bot" -e '/home/thaniyanki/Bots/Scheduler/venv/bin/python /home/thaniyanki/Bots/Scheduler/Scheduler.py'
+Icon=utilities-terminal
+Comment=Scheduler Bot Monitoring Console
+X-GNOME-Autostart-enabled=true
+StartupNotify=false
+Terminal=false
