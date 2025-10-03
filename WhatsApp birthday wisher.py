@@ -44,9 +44,13 @@ FIREBASE_DB_URL = "https://thaniyanki-xpath-manager-default-rtdb.firebaseio.com/
 whatsapp_xpath001 = None
 whatsapp_xpath002 = None
 whatsapp_xpath003 = None
+whatsapp_xpath004 = None
 driver = None
 next_step = None
 step8_message = None
+extracted_phone_number = None
+skip_to_step31 = False
+selected_wish_stored = None
 
 def close_chrome():
     """Closes all running instances of Chrome, Chromium, and chromedriver."""
@@ -191,7 +195,7 @@ def step8_filter_birthdays(spreadsheet):
                 print(step8_message)
                 next_step = "step9a"
                 return step8_message
-            elif count > 50:
+            elif count > 100:
                 step8_message = f"Warning - More than limit {count} people have birthday today it may consider as spam so drop the process"
                 print(step8_message)
                 next_step = "step9a"
@@ -230,17 +234,87 @@ def step9a_open_whatsapp_web():
             
             print("Entered WhatsApp Web")
             
-            # Check if logged in (wait up to 120 seconds, but don't print QR message)
-            try:
-                WebDriverWait(driver, 120).until(
-                    EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Chat list']"))
-                )
-                print("WhatsApp Web is ready")
+            # Wait for QR scan with new logic
+            start_time = time.time()
+            qr_scanned = False
+            
+            while time.time() - start_time <= 120:  # Wait up to 120 seconds
+                try:
+                    # Check if logged in by looking for chat list
+                    WebDriverWait(driver, 5).until(
+                        EC.presence_of_element_located((By.XPATH, "//div[@aria-label='Chat list']")))
+                    print("WhatsApp Web is ready - QR scanned successfully")
+                    qr_scanned = True
+                    break
+                except TimeoutException:
+                    # Wait 1 second and continue checking
+                    time.sleep(1)
+                    continue
+            
+            if qr_scanned:
                 return True
-            except TimeoutException:
-                # Silently refresh instead of printing QR message
-                continue
+            else:
+                # After 120 seconds, check for "Loading your chats" keyword
+                print("120 seconds completed - checking for 'Loading your chats' status")
                 
+                # Check if "Loading your chats" is present at 121st second
+                loading_found = False
+                try:
+                    # Look for loading indicator or text
+                    loading_elements = driver.find_elements(By.XPATH, "//*[contains(text(), 'Loading your chats')]")
+                    if loading_elements:
+                        loading_found = True
+                        print("'Loading your chats' keyword found - starting internet monitoring")
+                except:
+                    pass
+                
+                if loading_found:
+                    # Wait for loading to disappear with internet monitoring
+                    loading_disappeared = False
+                    check_count = 1
+                    internet_check_count = 0
+                    
+                    while True:
+                        try:
+                            # Check if loading is still present
+                            loading_elements = driver.find_elements(By.XPATH, "//*[contains(text(), 'Loading your chats')]")
+                            if not loading_elements:
+                                loading_disappeared = True
+                                print("'Loading your chats' disappeared - WhatsApp is ready")
+                                break
+                            else:
+                                print(f"Still loading... check {check_count}")
+                                check_count += 1
+                                
+                                # Check internet every 5 checks (approximately 5 seconds)
+                                if check_count % 5 == 0:
+                                    internet_check_count += 1
+                                    print(f"Internet check {internet_check_count}...")
+                                    if not check_internet():
+                                        print("Internet lost during loading - refreshing page")
+                                        driver.refresh()
+                                        time.sleep(5)
+                                        # Break to restart the entire process
+                                        break
+                                
+                        except Exception as e:
+                            print(f"Error checking loading status: {str(e)}")
+                        
+                        time.sleep(1)  # Check every second
+                    
+                    if loading_disappeared:
+                        return True
+                    else:
+                        # If we broke due to internet loss, continue to restart
+                        print("Restarting due to internet loss during loading")
+                        continue
+                else:
+                    # "Loading your chats" not found at 121st second - refresh
+                    print("'Loading your chats' not found - refreshing page")
+                    driver.refresh()
+                    time.sleep(5)
+                    continue
+                    
         except Exception as e:
             print(f"Error opening WhatsApp Web: {str(e)}")
             print("Retrying in 5 seconds...")
@@ -371,7 +445,7 @@ def step9g_paste_report_number():
             
             # Type number character by character
             search_field.send_keys(report_number)
-            time.sleep(1)  # Wait for input to complete
+            time.sleep(1)
             
             # Verify number was entered
             if report_number in search_field.text:
@@ -1745,10 +1819,6 @@ def step36_process_next_contact():
         print(f"Error during step36: {str(e)}")
         return "step20"  # Continue with next contact even on error
 
-# Add this global variable at the top of the script with other globals
-skip_to_step31 = False
-selected_wish_stored = None
-
 def step35_transfer_to_sheets():
     """Step 35: Transfer data to Google Sheets 'Sent message' sheet."""
     while True:
@@ -1876,8 +1946,6 @@ def step38_process_contact_data(worksheet):
             else:
                 time.sleep(1)
                 
-# Add these new functions before the main execution loop
-
 def step39_check_whatsapp_report():
     """Step 39: Check and create/delete WhatsApp report file."""
     whatsapp_report_file = WHATSAPP_REPORT_FILE
@@ -1945,8 +2013,6 @@ Sent message       = {sent_messages}
     except Exception as e:
         print(f"Error during step40: {str(e)}")
         return False
-
-# Add these new functions before the main execution loop
 
 def step41_open_whatsapp_web():
     """Step 41: Open WhatsApp Web in Chromium browser."""
@@ -2325,8 +2391,6 @@ def step53_check_message_status():
         close_chrome()
         return False
 
-# Add these new functions before the main execution loop
-
 def step54_open_whatsapp_web():
     """Step 54: Open WhatsApp Web in Chromium browser."""
     global driver
@@ -2517,7 +2581,7 @@ def step61_wait_and_press_down():
         print(f"Error during step61: {str(e)}")
         return False
 
-# Update the main execution loop to include steps 54-61
+# Main execution loop
 if __name__ == "__main__":
     # Global variable to store extracted phone number
     extracted_phone_number = None
@@ -2857,5 +2921,4 @@ if __name__ == "__main__":
             print(f"\nUnexpected error in main loop: {str(e)}")
             print("Restarting the process...")
             close_chrome()
-            time.sleep(5)          
-
+            time.sleep(5)
